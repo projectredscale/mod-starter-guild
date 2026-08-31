@@ -9,7 +9,8 @@
 
 ### Description ###
 ------------------------------------------------------------------------------------------------------------------
-This module automatically joins new players to a guild of your choice on first login.
+Redscale fork: a GM-only staff guild. Staff accounts (security >= SEC_GAMEMASTER) are added to the
+guild named by `StarterGuild.GuildName` (default "Redscale Staff") on login and first login.
 
 
 ### Data ###
@@ -19,7 +20,8 @@ This module automatically joins new players to a guild of your choice on first l
 - Config: Yes
     - Enable Module
     - Enable Module Announce
-    - Set ID for Horde and Alliance Guilds
+    - Staff guild name
+    - Welcome text
 - SQL: No
 
 
@@ -58,7 +60,6 @@ This module automatically joins new players to a guild of your choice on first l
 #include "Player.h"
 #include "ScriptMgr.h"
 
-#define Welcome_Name "Notice"
 uint32 guildMemberCount = 1000;
 
 class StarterGuild : public PlayerScript
@@ -67,12 +68,10 @@ public:
     StarterGuild() : PlayerScript("StarterGuild", {
         PLAYERHOOK_ON_LOGIN,
         PLAYERHOOK_ON_FIRST_LOGIN,
-        PLAYERHOOK_ON_LEVEL_CHANGED
     }) { }
 
     void OnPlayerLogin(Player* player) override;
     void OnPlayerFirstLogin(Player* player) override;
-    void OnPlayerLevelChanged(Player* player, uint8 previousLevel) override;
 
     static void AddPlayerToGuild(Player* player);
 };
